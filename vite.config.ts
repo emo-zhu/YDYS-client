@@ -26,7 +26,7 @@ export default defineConfig({
     }),
   ],
   build: {
-    outDir: "YDYF-client",
+    outDir: "dist",
   },
   base: "/medical",
   resolve: {

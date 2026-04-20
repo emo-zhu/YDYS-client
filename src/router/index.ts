@@ -44,6 +44,30 @@ export const routes: Array<RouteRecordRaw> = [
         },
         component: () => import("@/views/conductActivity/activity/List.vue"),
       },
+      // 自查自纠
+      {
+        path: "/conductActivity/commitment",
+        meta: {
+          forceReload: true,
+        },
+        component: () => import("@/views/conductActivity/commitment/List.vue"),
+      },
+      // 自查自纠报告
+      {
+        path: "/conductActivity/selfCheck",
+        meta: {
+          forceReload: true,
+        },
+        component: () => import("@/views/conductActivity/selfCheck/List.vue"),
+      },
+      // 个人承诺书
+      {
+        path: "/conductActivity/personalCommitment",
+        meta: {
+          forceReload: true,
+        },
+        component: () => import("@/views/conductActivity/personalCommitment/List.vue"),
+      },
       // 规章制度（兼容旧路由）
       {
         path: "/corporateConduct/list",
