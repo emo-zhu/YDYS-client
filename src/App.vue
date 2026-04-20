@@ -1,0 +1,3 @@
+<template>
+  <AppView></AppView>
+</template>
