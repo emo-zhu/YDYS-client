@@ -26,7 +26,7 @@ export default defineConfig({
     }),
   ],
   build: {
-    outDir: "hrssc-unitAssessment-client",
+    outDir: "YDYF-client",
   },
   base: "/medical",
   resolve: {

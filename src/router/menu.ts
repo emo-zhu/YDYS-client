@@ -20,6 +20,13 @@ export const menuOptions: MenuOption[] = [
         openMode: "FRAME_INNER",
       },
       {
+        label: "开展活动",
+        key: "15",
+        iconClass: "icon-biaoqian1",
+        href: "/conductActivity/activity",
+        openMode: "FRAME_INNER",
+      },
+      {
         label: "管理用户列表",
         key: "13",
         iconClass: "icon-biaoqian1",

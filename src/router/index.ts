@@ -26,7 +26,7 @@ export const routes: Array<RouteRecordRaw> = [
         meta: {
           forceReload: true,
         },
-        component: () => import("@/views/organizational/List.vue"),
+        component: () => import("@/views/corporateConduct/organizational/List.vue"),
       },
       // 规章制度
       {
@@ -34,7 +34,15 @@ export const routes: Array<RouteRecordRaw> = [
         meta: {
           forceReload: true,
         },
-        component: () => import("@/views/regulations/List.vue"),
+        component: () => import("@/views/corporateConduct/regulations/List.vue"),
+      },
+      // 开展活动
+      {
+        path: "/conductActivity/activity",
+        meta: {
+          forceReload: true,
+        },
+        component: () => import("@/views/conductActivity/activity/List.vue"),
       },
       // 规章制度（兼容旧路由）
       {
@@ -42,7 +50,7 @@ export const routes: Array<RouteRecordRaw> = [
         meta: {
           forceReload: true,
         },
-        component: () => import("@/views/regulations/List.vue"),
+        component: () => import("@/views/corporateConduct/regulations/List.vue"),
       },
       // 管理用户列表
       {
@@ -50,7 +58,7 @@ export const routes: Array<RouteRecordRaw> = [
         meta: {
           forceReload: true,
         },
-        component: () => import("@/views/management/List.vue"),
+        component: () => import("@/views/userRole/management/List.vue"),
       },
       // 审核用户列表
       {
@@ -58,7 +66,7 @@ export const routes: Array<RouteRecordRaw> = [
         meta: {
           forceReload: true,
         },
-        component: () => import("@/views/audit/List.vue"),
+        component: () => import("@/views/userRole/audit/List.vue"),
       },
     ],
   },
