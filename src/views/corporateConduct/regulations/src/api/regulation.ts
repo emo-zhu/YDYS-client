@@ -89,7 +89,7 @@ const filterRegulations = (query: Pick<RegulationPageQuery, 'keywords'>) => {
 export namespace RegulationApi {
   export const getPage = async (query: RegulationPageQuery): Promise<RegulationPageData> => {
     const pageNum = query.pageNum || 1
-    const pageSize = query.pageSize || 10
+    const pageSize = query.pageSize || 20
     const filteredList = filterRegulations(query)
     const start = (pageNum - 1) * pageSize
     const end = start + pageSize

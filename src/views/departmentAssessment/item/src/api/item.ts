@@ -127,7 +127,7 @@ const normalizeItem = (form: DepartmentAssessmentItemForm, id: number): Departme
 export namespace DepartmentAssessmentItemApi {
   export const getPage = async (query: DepartmentAssessmentItemPageQuery): Promise<DepartmentAssessmentItemPageData> => {
     const pageNum = query.pageNum || 1
-    const pageSize = query.pageSize || 10
+    const pageSize = query.pageSize || 20
     const keywords = query.keywords.trim()
     const filtered = itemStore.filter((item) => !keywords || item.itemName.includes(keywords))
     const start = (pageNum - 1) * pageSize

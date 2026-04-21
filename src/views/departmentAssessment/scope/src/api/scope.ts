@@ -82,7 +82,7 @@ export namespace DepartmentAssessmentScopeApi {
 
   export const getPage = async (query: DepartmentAssessmentScopePageQuery): Promise<DepartmentAssessmentScopePageData> => {
     const pageNum = query.pageNum || 1
-    const pageSize = query.pageSize || 10
+    const pageSize = query.pageSize || 20
     const keywords = query.keywords.trim()
     const filtered = scopeStore.filter((item) => !keywords || item.groupName.includes(keywords))
     const start = (pageNum - 1) * pageSize

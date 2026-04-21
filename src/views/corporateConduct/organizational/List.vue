@@ -1,7 +1,14 @@
 <template>
   <page :page-tabs="[{ label: '组织体系', value: '1' }]">
     <page-body>
-      <page-body-container class="organizational-page">
+      <page-body-header>
+        <div></div>
+        <n-space>
+          <j-button round @click="organizationalPage.expandAll">展开全部</j-button>
+          <j-button round @click="organizationalPage.collapseAll">收起全部</j-button>
+        </n-space>
+      </page-body-header>
+      <page-body-container>
         <section class="org-section">
           <div class="org-section__head">
             <h3 class="org-section__title">行风建设工作领导小组</h3>
@@ -35,10 +42,6 @@
         <section class="org-section">
           <div class="org-section__head">
             <h3 class="org-section__title">各科室行风建设小组</h3>
-            <n-space size="small" class="org-section__actions">
-              <n-button quaternary type="info" size="small" @click="organizationalPage.expandAll">展开全部</n-button>
-              <n-button quaternary type="info" size="small" @click="organizationalPage.collapseAll">收起全部</n-button>
-            </n-space>
           </div>
           <n-data-table
             class="org-table dept-table"
@@ -53,10 +56,11 @@
           />
         </section>
       </page-body-container>
-      <page-body-footer class="org-page-footer">
+      <page-body-footer>
         <j-pagination
           v-model:page-query="organizationalPage.departmentPageQuery"
           :page-data="organizationalPage.departmentPageData.value"
+          :page-sizes="[{ label: '每页显示10行', value: 10 }, { label: '每页显示20行', value: 20 }, { label: '每页显示100行', value: 100 }, { label: '每页显示500行', value: 500 }, { label: '每页显示1000行', value: 1000 }, { label: '每页显示2000行', value: 2000 }]"
           @load-page="organizationalPage.loadDepartmentPage"
           :init="false"
         />
@@ -69,7 +73,7 @@
 </template>
 
 <script lang="ts" setup>
-import { renderOperation } from 'junegoo-ui'
+import { JButton, renderOperation } from 'junegoo-ui'
 import type { DataTableColumns } from 'naive-ui'
 import { h, onMounted } from 'vue'
 import Edit from './Edit.vue'
@@ -192,10 +196,6 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.organizational-page {
-  padding: 8px 6px 4px;
-}
-
 .org-section {
   margin-bottom: 16px;
   border: 1px solid #dcdfe6;
@@ -234,14 +234,6 @@ onMounted(() => {
   height: 18px;
   border-radius: 2px;
   background: #2d8cf0;
-}
-
-.org-section__actions {
-  flex-shrink: 0;
-}
-
-.org-page-footer {
-  padding-top: 2px;
 }
 
 .include-text {

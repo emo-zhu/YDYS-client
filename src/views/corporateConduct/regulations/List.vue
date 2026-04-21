@@ -32,6 +32,7 @@
         <j-pagination
           v-model:page-query="regulationPage.query"
           :page-data="regulationPage.pageData.value"
+          :page-sizes="[{ label: '每页显示10行', value: 10 }, { label: '每页显示20行', value: 20 }, { label: '每页显示100行', value: 100 }, { label: '每页显示500行', value: 500 }, { label: '每页显示1000行', value: 1000 }, { label: '每页显示2000行', value: 2000 }]"
           @load-page="regulationPage.loadPage"
           :init="false"
         />
@@ -67,7 +68,7 @@ const columns: DataTableColumns<RegulationItem> = [
     width: 72,
     render(_row, index) {
       const pageNum = regulationPage.query.pageNum || 1
-      const pageSize = regulationPage.query.pageSize || 10
+      const pageSize = regulationPage.query.pageSize || 20
       return index + 1 + (pageNum - 1) * pageSize
     }
   },

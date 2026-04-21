@@ -87,7 +87,7 @@ export namespace OrganizationalApi {
 
   export const getDepartmentPage = async (query: DepartmentPageQuery): Promise<DepartmentPageData> => {
     const pageNum = query.pageNum || 1
-    const pageSize = query.pageSize || 10
+    const pageSize = query.pageSize || 20
     const start = (pageNum - 1) * pageSize
     const end = start + pageSize
     const records = cloneDepartmentRows(departmentStore.slice(start, end))

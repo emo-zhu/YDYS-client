@@ -30,6 +30,7 @@
         <j-pagination
           v-model:page-query="scopePage.query"
           :page-data="scopePage.pageData.value"
+          :page-sizes="[{ label: '每页显示10行', value: 10 }, { label: '每页显示20行', value: 20 }, { label: '每页显示100行', value: 100 }, { label: '每页显示500行', value: 500 }, { label: '每页显示1000行', value: 1000 }, { label: '每页显示2000行', value: 2000 }]"
           @load-page="scopePage.loadPage"
           :init="false"
         />

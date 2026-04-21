@@ -12,16 +12,16 @@ const query = reactive<CommitmentPageQuery>({
   reportName: '',
   dateRange: null,
   pageNum: 1,
-  pageSize: 10
+  pageSize: 20
 })
 
 const pageData = ref<CommitmentPageData>({
   records: [],
   total: 0,
   pageNum: 1,
-  pageSize: 10,
+  pageSize: 20,
   current: 1,
-  size: 10,
+  size: 20,
   pages: 1
 })
 const pageLoading = ref(false)
@@ -48,7 +48,7 @@ const getPage = async () => {
 }
 
 const loadPage = async () => {
-  const pageSize = query.pageSize || 10
+  const pageSize = query.pageSize || 20
   const total = pageData.value.total || 0
   const pages = Math.max(1, Math.ceil(total / pageSize))
   if ((query.pageNum || 1) > pages) {
@@ -66,7 +66,7 @@ const onReset = async () => {
   query.reportName = ''
   query.dateRange = null
   query.pageNum = 1
-  query.pageSize = 10
+  query.pageSize = 20
   await getPage()
 }
 

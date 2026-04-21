@@ -4,6 +4,7 @@
       <page-body-header>
         <j-search
           v-model:value="activityPage.query.title"
+          width="760px"
           placeholder="请输入活动标题"
           @search="activityPage.onSearch"
           :reset="true"
@@ -26,7 +27,6 @@
             >新增</j-button
           >
           <j-button
-            type="error"
             round
             :disabled="activityPage.checkedRowKeys.value.length === 0"
             @click="activityPage.onBatchDelete"
@@ -57,6 +57,7 @@
         <j-pagination
           v-model:page-query="activityPage.query"
           :page-data="activityPage.pageData.value"
+          :page-sizes="[{ label: '每页显示10行', value: 10 }, { label: '每页显示20行', value: 20 }, { label: '每页显示100行', value: 100 }, { label: '每页显示500行', value: 500 }, { label: '每页显示1000行', value: 1000 }, { label: '每页显示2000行', value: 2000 }]"
           @load-page="activityPage.loadPage"
           :init="false"
         />
@@ -200,6 +201,11 @@ onMounted(() => {
 
 .activity-search :deep(.date-range-picker) {
   width: 100%;
+}
+
+.activity-search :deep(.n-input) {
+  flex: 1;
+  min-width: 220px;
 }
 
 :deep(.activity-table .n-data-table-th) {

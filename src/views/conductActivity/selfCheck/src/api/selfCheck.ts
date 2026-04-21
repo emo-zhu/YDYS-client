@@ -63,7 +63,7 @@ const filterSelfChecks = (query: Pick<SelfCheckPageQuery, 'reportName' | 'dateRa
 export namespace SelfCheckApi {
   export const getPage = async (query: SelfCheckPageQuery): Promise<SelfCheckPageData> => {
     const pageNum = query.pageNum || 1
-    const pageSize = query.pageSize || 10
+    const pageSize = query.pageSize || 20
     const filteredList = filterSelfChecks(query)
     const start = (pageNum - 1) * pageSize
     const end = start + pageSize

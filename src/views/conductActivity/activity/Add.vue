@@ -1,5 +1,11 @@
 <template>
-  <n-modal v-model:show="addModal.status" preset="card" title="新增活动" style="width: 680px" :mask-closable="false">
+  <n-modal
+    v-model:show="addModal.status"
+    preset="card"
+    title="新增活动"
+    style="width: 840px; max-width: calc(100vw - 48px)"
+    :mask-closable="false"
+  >
     <ActivityForm ref="formRef" v-model="activitySave.form" />
     <template #footer>
       <div class="editor-footer">

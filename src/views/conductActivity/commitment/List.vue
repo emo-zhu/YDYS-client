@@ -4,6 +4,7 @@
       <page-body-header>
         <j-search
           v-model:value="commitmentPage.query.reportName"
+          width="760px"
           placeholder="请输入自查自纠报告名称"
           @search="commitmentPage.onSearch"
           :reset="true"
@@ -43,6 +44,7 @@
         <j-pagination
           v-model:page-query="commitmentPage.query"
           :page-data="commitmentPage.pageData.value"
+          :page-sizes="[{ label: '每页显示10行', value: 10 }, { label: '每页显示20行', value: 20 }, { label: '每页显示100行', value: 100 }, { label: '每页显示500行', value: 500 }, { label: '每页显示1000行', value: 1000 }, { label: '每页显示2000行', value: 2000 }]"
           @load-page="commitmentPage.loadPage"
           :init="false"
         />
@@ -127,6 +129,7 @@ const columns: DataTableColumns<CommitmentItem> = [
   {
     title: '操作',
     key: 'operate',
+    fixed: 'right',
     width: 172,
     align: 'center',
     render(row) {
@@ -174,6 +177,11 @@ onMounted(() => {
 
 .commitment-search :deep(.date-range-picker) {
   width: 100%;
+}
+
+.commitment-search :deep(.n-input) {
+  flex: 1;
+  min-width: 220px;
 }
 
 :deep(.commitment-table .n-data-table-th) {

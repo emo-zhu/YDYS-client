@@ -89,7 +89,7 @@ const isDateRangeMatched = (startDate: string, endDate: string, range: DateRange
 export namespace ActivityApi {
   export const getPage = async (query: ActivityPageQuery): Promise<ActivityPageData> => {
     const pageNum = query.pageNum || 1
-    const pageSize = query.pageSize || 10
+    const pageSize = query.pageSize || 20
     const filteredList = filterActivities(query)
     const start = (pageNum - 1) * pageSize
     const end = start + pageSize

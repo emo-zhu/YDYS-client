@@ -25,15 +25,15 @@ const leadershipRows = ref<BasicRow[]>([])
 const officeRows = ref<BasicRow[]>([])
 const departmentPageQuery = reactive<DepartmentPageQuery>({
   pageNum: 1,
-  pageSize: 10
+  pageSize: 20
 })
 const departmentPageData = ref<DepartmentPageData>({
   records: [],
   total: 0,
   pageNum: 1,
-  pageSize: 10,
+  pageSize: 20,
   current: 1,
-  size: 10,
+  size: 20,
   pages: 1
 })
 const expandedRowKeys = ref<TableRowKey[]>(['dept-1', 'dept-2'])
@@ -69,7 +69,7 @@ const getDepartmentPage = async () => {
 }
 
 const loadDepartmentPage = async () => {
-  const pageSize = departmentPageQuery.pageSize || 10
+  const pageSize = departmentPageQuery.pageSize || 20
   const total = departmentPageData.value.total || 0
   const pages = Math.max(1, Math.ceil(total / pageSize))
   if ((departmentPageQuery.pageNum || 1) > pages) {

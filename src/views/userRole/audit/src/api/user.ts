@@ -29,7 +29,7 @@ export const createDefaultUserForm = (): UserForm => ({
 export namespace UserApi {
   export const getPage = async (query: UserPageQuery): Promise<UserPageData> => {
     const pageNum = query.pageNum || 1
-    const pageSize = query.pageSize || 10
+    const pageSize = query.pageSize || 20
     const filteredList = filterUsers(query)
     const start = (pageNum - 1) * pageSize
     const end = start + pageSize

@@ -104,7 +104,7 @@ export namespace DepartmentAssessmentTableApi {
     query: DepartmentAssessmentTablePageQuery,
   ): Promise<DepartmentAssessmentTablePageData> => {
     const pageNum = query.pageNum || 1;
-    const pageSize = query.pageSize || 10;
+    const pageSize = query.pageSize || 20;
     const keywords = query.keywords.trim();
     const filtered = tableStore.filter(
       (item) => !keywords || item.tableName.includes(keywords),

@@ -1,31 +1,32 @@
 <template>
-  <n-form ref="formRef" :model="model" :rules="rules" label-placement="left" label-width="92">
-    <n-grid :cols="2" :x-gap="16">
-      <n-form-item-gi label="活动标题" path="title" :span="2">
+  <n-form ref="formRef" class="activity-form" :model="model" :rules="rules" label-placement="left" label-width="132">
+    <div class="activity-form__grid">
+      <n-form-item class="activity-form__item activity-form__item--full" label="活动标题" path="title">
         <n-input v-model:value="model.title" placeholder="请输入活动标题" maxlength="50" show-count />
-      </n-form-item-gi>
-      <n-form-item-gi label="开展日期段" path="activityDateRange" :span="2">
+      </n-form-item>
+      <n-form-item class="activity-form__item activity-form__item--full" label="开展日期段" path="activityDateRange">
         <n-date-picker
           v-model:value="model.activityDateRange"
+          class="activity-form__date-range"
           type="daterange"
           clearable
           start-placeholder="开始日期"
           end-placeholder="结束日期"
         />
-      </n-form-item-gi>
-      <n-form-item-gi label="活动组织部门" path="department">
+      </n-form-item>
+      <n-form-item class="activity-form__item" label="活动组织部门" path="department">
         <n-input v-model:value="model.department" placeholder="请输入活动组织部门" />
-      </n-form-item-gi>
-      <n-form-item-gi label="活动录入日期" path="entryDate">
+      </n-form-item>
+      <n-form-item class="activity-form__item" label="活动录入日期" path="entryDate">
         <n-date-picker type="date" value-format="yyyy-MM-dd" v-model:formatted-value="model.entryDate" clearable />
-      </n-form-item-gi>
-      <n-form-item-gi label="录入人信息" path="entryUser">
+      </n-form-item>
+      <n-form-item class="activity-form__item" label="录入人信息" path="entryUser">
         <n-input v-model:value="model.entryUser" placeholder="请输入录入人信息" />
-      </n-form-item-gi>
-      <n-form-item-gi label="活动状态" path="status">
+      </n-form-item>
+      <n-form-item class="activity-form__item" label="活动状态" path="status">
         <n-select v-model:value="model.status" :options="statusOptions" />
-      </n-form-item-gi>
-    </n-grid>
+      </n-form-item>
+    </div>
   </n-form>
 </template>
 
@@ -97,3 +98,54 @@ const getData = () => {
 
 defineExpose({ getData })
 </script>
+
+<style scoped lang="scss">
+.activity-form {
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 24px;
+    row-gap: 8px;
+  }
+
+  &__item {
+    min-width: 0;
+  }
+
+  &__item--full {
+    grid-column: 1 / -1;
+  }
+
+  &__date-range {
+    width: 100%;
+  }
+
+  :deep(.n-form-item) {
+    margin-bottom: 0;
+  }
+
+  :deep(.n-form-item-label) {
+    white-space: nowrap;
+    justify-content: flex-end;
+    padding-right: 16px;
+  }
+
+  :deep(.n-input),
+  :deep(.n-base-selection),
+  :deep(.n-date-picker) {
+    width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  .activity-form {
+    &__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    &__item--full {
+      grid-column: auto;
+    }
+  }
+}
+</style>

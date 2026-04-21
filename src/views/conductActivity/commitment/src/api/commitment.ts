@@ -63,7 +63,7 @@ const filterCommitments = (query: Pick<CommitmentPageQuery, 'reportName' | 'date
 export namespace CommitmentApi {
   export const getPage = async (query: CommitmentPageQuery): Promise<CommitmentPageData> => {
     const pageNum = query.pageNum || 1
-    const pageSize = query.pageSize || 10
+    const pageSize = query.pageSize || 20
     const filteredList = filterCommitments(query)
     const start = (pageNum - 1) * pageSize
     const end = start + pageSize

@@ -71,6 +71,54 @@ export const routes: Array<RouteRecordRaw> = [
         component: () =>
           import("@/views/conductActivity/personalCommitment/List.vue"),
       },
+      // 月度工作会议
+      {
+        path: "/workMeeting/monthly",
+        meta: {
+          forceReload: true,
+        },
+        component: () => import("@/views/workMeeting/monthly/List.vue"),
+      },
+      // 季度工作会议
+      {
+        path: "/workMeeting/quarterly",
+        meta: {
+          forceReload: true,
+        },
+        component: () => import("@/views/workMeeting/quarterly/List.vue"),
+      },
+      // 半年度工作会议
+      {
+        path: "/workMeeting/semiAnnual",
+        meta: {
+          forceReload: true,
+        },
+        component: () => import("@/views/workMeeting/semiAnnual/List.vue"),
+      },
+      // 年度工作会议
+      {
+        path: "/workMeeting/annual",
+        meta: {
+          forceReload: true,
+        },
+        component: () => import("@/views/workMeeting/annual/List.vue"),
+      },
+      // 我的医德档案
+      {
+        path: "/ethicsArchive/my",
+        meta: {
+          forceReload: true,
+        },
+        component: () => import("@/views/ethicsArchive/my/List.vue"),
+      },
+      // 全员医德档案
+      {
+        path: "/ethicsArchive/all",
+        meta: {
+          forceReload: true,
+        },
+        component: () => import("@/views/ethicsArchive/all/List.vue"),
+      },
       // 科室考评表
       {
         path: "/departmentAssessment/table",
