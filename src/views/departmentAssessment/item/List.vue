@@ -1,0 +1,179 @@
+<template>
+  <page :page-tabs="[{ label: '科室考评项目', value: '1' }]">
+    <page-body>
+      <page-body-header>
+        <j-search
+          v-model:value="itemPage.query.keywords"
+          placeholder="输入考评项名称查询"
+          @search="itemPage.onSearch"
+          :reset="true"
+          @reset="itemPage.onReset"
+        />
+        <n-space>
+          <j-button type="info" round @click="itemPage.openAdd">新增</j-button>
+        </n-space>
+      </page-body-header>
+      <page-body-container>
+        <n-data-table
+          class="department-assessment-item-table"
+          :columns="columns"
+          :data="itemPage.pageData.value.records"
+          :single-line="false"
+          :bordered="true"
+          striped
+          :pagination="false"
+          :row-key="itemPage.rowKey"
+          :loading="itemPage.loading.value"
+        />
+      </page-body-container>
+      <page-body-footer>
+        <j-pagination
+          v-model:page-query="itemPage.query"
+          :page-data="itemPage.pageData.value"
+          @load-page="itemPage.loadPage"
+          :init="false"
+        />
+      </page-body-footer>
+    </page-body>
+
+    <Add />
+    <Edit />
+    <View />
+  </page>
+</template>
+
+<script lang="ts" setup>
+import { JButton, renderOperation } from 'junegoo-ui'
+import type { DataTableColumns } from 'naive-ui'
+import { h, onMounted } from 'vue'
+import Add from './Add.vue'
+import Edit from './Edit.vue'
+import View from './View.vue'
+import { useDepartmentAssessmentItemModule } from './src/hooks/item'
+import type { DepartmentAssessmentItem } from './src/types/item'
+
+const { itemPage } = useDepartmentAssessmentItemModule()
+
+const columns: DataTableColumns<DepartmentAssessmentItem> = [
+  {
+    title: '排序号',
+    key: 'sortOrder',
+    width: 100,
+    align: 'center'
+  },
+  {
+    title: '考评项名称',
+    key: 'itemName',
+    minWidth: 220,
+    ellipsis: { tooltip: true },
+    render(row) {
+      return h(
+        'span',
+        {
+          class: 'title-text title-text--link',
+          onClick: () => itemPage.openView(row.id)
+        },
+        row.itemName
+      )
+    }
+  },
+  {
+    title: '考评项类型',
+    key: 'itemTypeName',
+    width: 140
+  },
+  {
+    title: '固定分',
+    key: 'fixedScore',
+    width: 96,
+    align: 'center',
+    render(row) {
+      return row.fixedScore ?? '-'
+    }
+  },
+  {
+    title: '最低分',
+    key: 'minScore',
+    width: 96,
+    align: 'center',
+    render(row) {
+      return row.minScore ?? '-'
+    }
+  },
+  {
+    title: '最高分',
+    key: 'maxScore',
+    width: 96,
+    align: 'center',
+    render(row) {
+      return row.maxScore ?? '-'
+    }
+  },
+  {
+    title: '操作',
+    key: 'operate',
+    width: 156,
+    align: 'center',
+    render(row) {
+      return renderOperation([
+        {
+          label: '详情',
+          event() {
+            itemPage.openView(row.id)
+          }
+        },
+        {
+          label: '编辑',
+          event() {
+            itemPage.openEdit(row.id)
+          }
+        },
+        {
+          label: '删除',
+          event() {
+            itemPage.onDelete(row.id)
+          }
+        }
+      ])
+    }
+  }
+]
+
+onMounted(() => {
+  itemPage.getPage()
+})
+</script>
+
+<style scoped lang="scss">
+:deep(.department-assessment-item-table .n-data-table-th) {
+  background: #f2f4f7;
+  color: #1f2937;
+  font-size: 14px;
+  font-weight: 600;
+  border-color: #dcdfe6;
+}
+
+:deep(.department-assessment-item-table .n-data-table-td) {
+  padding: 12px;
+  font-size: 14px;
+  color: #303133;
+  line-height: 1.5;
+  border-color: #e4e7ed;
+}
+
+:deep(.department-assessment-item-table .n-data-table-tr:hover .n-data-table-td) {
+  background: #fafbfd;
+}
+
+.title-text {
+  color: #303133;
+}
+
+.title-text--link {
+  cursor: pointer;
+}
+
+.title-text--link:hover {
+  color: #1677ff;
+}
+</style>

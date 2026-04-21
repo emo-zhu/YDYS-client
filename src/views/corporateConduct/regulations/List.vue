@@ -1,25 +1,20 @@
 <template>
   <page :page-tabs="[{ label: '规章制度', value: '1' }]">
     <page-body>
-      <page-body-container class="regulations-page">
-        <div class="query-bar">
+      <page-body-header>
           <j-search
             v-model:value="regulationPage.query.keywords"
             placeholder="输入规章制度查询"
             @search="regulationPage.onSearch"
             :reset="true"
             @reset="regulationPage.onReset"
-            class="regulations-search"
           />
-        </div>
-
-        <div class="toolbar">
-          <n-space size="small">
-            <n-button type="info" @click="regulationPage.openAdd">新增</n-button>
-            <n-button :disabled="regulationPage.checkedRowKeys.value.length === 0" @click="regulationPage.onBatchDelete">删除</n-button>
+          <n-space>
+            <j-button type="info" round @click="regulationPage.openAdd">新增</j-button>
+            <j-button round :disabled="regulationPage.checkedRowKeys.value.length === 0" @click="regulationPage.onBatchDelete">删除</j-button>
           </n-space>
-        </div>
-
+      </page-body-header>
+      <page-body-container>
         <n-data-table
           class="regulations-table"
           :columns="columns"
@@ -50,7 +45,7 @@
 </template>
 
 <script lang="ts" setup>
-import { renderOperation, renderTextButton } from 'junegoo-ui'
+import { JButton, renderOperation, renderTextButton } from 'junegoo-ui'
 import type { DataTableColumns } from 'naive-ui'
 import { h, onMounted } from 'vue'
 import Add from './Add.vue'
@@ -158,26 +153,6 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.regulations-page {
-  padding: 8px 6px 4px;
-}
-
-.query-bar {
-  display: flex;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-:deep(.regulations-search) {
-  width: 100%;
-}
-
-.toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  margin-bottom: 10px;
-}
 
 :deep(.regulations-table .n-data-table-th) {
   background: #f2f4f7;

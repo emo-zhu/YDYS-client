@@ -1,19 +1,16 @@
 <template>
   <page :page-tabs="[{ label: '开展活动', value: '1' }]">
     <page-body>
-      <page-body-container class="activity-page">
-        <div class="query-bar">
-          <div class="query-item query-item--title">
-            <span class="query-item__label">活动标题：</span>
-            <n-input
-              v-model:value="activityPage.query.title"
-              placeholder="请输入活动标题"
-              clearable
-              @keydown.enter.prevent="activityPage.onSearch"
-            />
-          </div>
-          <div class="query-item query-item--date">
-            <span class="query-item__label">开展日期段：</span>
+      <page-body-header>
+        <j-search
+          v-model:value="activityPage.query.title"
+          placeholder="请输入活动标题"
+          @search="activityPage.onSearch"
+          :reset="true"
+          @reset="activityPage.onReset"
+          class="activity-search"
+        >
+          <div class="search-addon search-addon--date">
             <n-date-picker
               v-model:value="activityPage.query.dateRange"
               type="daterange"
@@ -23,24 +20,25 @@
               class="date-range-picker"
             />
           </div>
-          <div class="query-actions">
-            <n-space size="small">
-              <n-button type="info" @click="activityPage.onSearch">搜索</n-button>
-              <n-button @click="activityPage.onReset">重置</n-button>
-            </n-space>
-          </div>
-        </div>
-
-        <div class="toolbar">
-          <n-space size="small">
-            <n-button type="info" @click="activityPage.openAdd">新增</n-button>
-            <n-button type="error" :disabled="activityPage.checkedRowKeys.value.length === 0" @click="activityPage.onBatchDelete">
-              删除
-            </n-button>
-            <n-button secondary type="info" @click="activityPage.onExport">导出</n-button>
-          </n-space>
-        </div>
-
+        </j-search>
+        <n-space>
+          <j-button type="info" round @click="activityPage.openAdd"
+            >新增</j-button
+          >
+          <j-button
+            type="error"
+            round
+            :disabled="activityPage.checkedRowKeys.value.length === 0"
+            @click="activityPage.onBatchDelete"
+          >
+            删除
+          </j-button>
+          <j-button secondary type="info" round @click="activityPage.onExport"
+            >导出</j-button
+          >
+        </n-space>
+      </page-body-header>
+      <page-body-container>
         <n-data-table
           class="activity-table"
           :columns="columns"
@@ -72,164 +70,136 @@
 </template>
 
 <script lang="ts" setup>
-import { renderOperation } from 'junegoo-ui'
-import type { DataTableColumns } from 'naive-ui'
-import { h, onMounted } from 'vue'
-import Add from './Add.vue'
-import Edit from './Edit.vue'
-import View from './View.vue'
-import { getActivityDateText } from './src/api/activity'
-import { useActivityModule } from './src/hooks/activity'
-import type { ActivityItem } from './src/types/activity'
+import { JButton, renderOperation } from "junegoo-ui";
+import type { DataTableColumns } from "naive-ui";
+import { h, onMounted } from "vue";
+import Add from "./Add.vue";
+import Edit from "./Edit.vue";
+import View from "./View.vue";
+import { getActivityDateText } from "./src/api/activity";
+import { useActivityModule } from "./src/hooks/activity";
+import type { ActivityItem } from "./src/types/activity";
 
-const { activityPage } = useActivityModule()
+const { activityPage } = useActivityModule();
 
 const columns: DataTableColumns<ActivityItem> = [
   {
-    type: 'selection',
-    width: 56
+    type: "selection",
+    width: 56,
   },
   {
-    title: '活动状态',
-    key: 'status',
+    title: "活动状态",
+    key: "status",
     width: 120,
     render(row) {
       return h(
-        'span',
+        "span",
         {
-          class: ['status-tag', row.status === '已发布' ? 'status-tag--published' : 'status-tag--draft']
+          class: [
+            "status-tag",
+            row.status === "已发布"
+              ? "status-tag--published"
+              : "status-tag--draft",
+          ],
         },
-        row.status
-      )
-    }
+        row.status,
+      );
+    },
   },
   {
-    title: '行风活动主题',
-    key: 'title',
+    title: "行风活动主题",
+    key: "title",
     minWidth: 320,
     ellipsis: { tooltip: true },
     render(row) {
       return h(
-        'span',
+        "span",
         {
-          class: 'title-text title-text--link',
-          onClick: () => activityPage.openView(row.id)
+          class: "title-text title-text--link",
+          onClick: () => activityPage.openView(row.id),
         },
-        row.title
-      )
-    }
+        row.title,
+      );
+    },
   },
   {
-    title: '活动开展时间',
-    key: 'activityDate',
+    title: "活动开展时间",
+    key: "activityDate",
     width: 170,
     render(row) {
-      return getActivityDateText(row)
-    }
+      return getActivityDateText(row);
+    },
   },
   {
-    title: '活动组织部门',
-    key: 'department',
+    title: "活动组织部门",
+    key: "department",
     width: 180,
-    ellipsis: { tooltip: true }
+    ellipsis: { tooltip: true },
   },
   {
-    title: '活动录入日期',
-    key: 'entryDate',
-    width: 160
+    title: "活动录入日期",
+    key: "entryDate",
+    width: 160,
   },
   {
-    title: '录入人信息',
-    key: 'entryUser',
+    title: "录入人信息",
+    key: "entryUser",
     minWidth: 240,
-    ellipsis: { tooltip: true }
+    ellipsis: { tooltip: true },
   },
   {
-    title: '操作',
-    key: 'operate',
+    title: "操作",
+    key: "operate",
     width: 188,
-    align: 'center',
+    align: "center",
     render(row) {
       return renderOperation([
-        row.status === '已发布'
+        row.status === "已发布"
           ? {
-              label: '取消发布',
+              label: "取消发布",
               event() {
-                activityPage.onUpdateStatus(row, '未发布')
-              }
+                activityPage.onUpdateStatus(row, "未发布");
+              },
             }
           : {
-              label: '发布',
+              label: "发布",
               event() {
-                activityPage.onUpdateStatus(row, '已发布')
-              }
+                activityPage.onUpdateStatus(row, "已发布");
+              },
             },
         {
-          label: '编辑',
+          label: "编辑",
           event() {
-            activityPage.openEdit(row.id)
-          }
+            activityPage.openEdit(row.id);
+          },
         },
         {
-          label: '删除',
+          label: "删除",
           event() {
-            activityPage.onDelete(row.id)
-          }
-        }
-      ])
-    }
-  }
-]
+            activityPage.onDelete(row.id);
+          },
+        },
+      ]);
+    },
+  },
+];
 
 onMounted(() => {
-  activityPage.getPage()
-})
+  activityPage.getPage();
+});
 </script>
 
 <style scoped lang="scss">
-.activity-page {
-  padding: 8px 6px 4px;
-}
-
-.query-bar {
-  display: grid;
-  grid-template-columns: minmax(280px, 1.1fr) minmax(360px, 1.3fr) auto;
-  gap: 12px;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.query-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.query-item__label {
+.search-addon {
   flex-shrink: 0;
-  color: #303133;
-  font-size: 14px;
-  font-weight: 500;
 }
 
-.query-item--title :deep(.n-input) {
-  flex: 1;
+.search-addon--date {
+  width: 360px;
 }
 
-.query-item--date :deep(.date-range-picker) {
+.activity-search :deep(.date-range-picker) {
   width: 100%;
-}
-
-.query-actions {
-  display: flex;
-  justify-content: flex-start;
-}
-
-.toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  margin-bottom: 10px;
 }
 
 :deep(.activity-table .n-data-table-th) {
@@ -286,8 +256,8 @@ onMounted(() => {
 }
 
 @media (max-width: 1280px) {
-  .query-bar {
-    grid-template-columns: 1fr;
+  .search-addon--date {
+    width: 100%;
   }
 }
 </style>

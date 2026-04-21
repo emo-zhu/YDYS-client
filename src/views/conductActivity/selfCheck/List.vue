@@ -1,19 +1,16 @@
 <template>
   <page :page-tabs="[{ label: '自查自纠报告', value: '1' }]">
     <page-body>
-      <page-body-container class="self-check-page">
-        <div class="query-bar">
-          <div class="query-item query-item--title">
-            <span class="query-item__label">自查自纠报告名称：</span>
-            <n-input
-              v-model:value="selfCheckPage.query.reportName"
-              placeholder="请输入"
-              clearable
-              @keydown.enter.prevent="selfCheckPage.onSearch"
-            />
-          </div>
-          <div class="query-item query-item--date">
-            <span class="query-item__label">起止时间：</span>
+      <page-body-header>
+        <j-search
+          v-model:value="selfCheckPage.query.reportName"
+          placeholder="请输入自查自纠报告名称"
+          @search="selfCheckPage.onSearch"
+          :reset="true"
+          @reset="selfCheckPage.onReset"
+          class="self-check-search"
+        >
+          <div class="search-addon search-addon--date">
             <n-date-picker
               v-model:value="selfCheckPage.query.dateRange"
               type="daterange"
@@ -23,20 +20,12 @@
               class="date-range-picker"
             />
           </div>
-          <div class="query-actions">
-            <n-space size="small">
-              <n-button type="info" @click="selfCheckPage.onSearch">搜索</n-button>
-              <n-button @click="selfCheckPage.onReset">重置</n-button>
-            </n-space>
-          </div>
-        </div>
-
-        <div class="toolbar">
-          <n-space size="small">
-            <n-button type="info" @click="selfCheckPage.openAdd">新增</n-button>
-          </n-space>
-        </div>
-
+        </j-search>
+        <n-space>
+          <j-button type="info" round @click="selfCheckPage.openAdd">新增</j-button>
+        </n-space>
+      </page-body-header>
+      <page-body-container>
         <n-data-table
           class="self-check-table"
           :columns="columns"
@@ -67,7 +56,7 @@
 </template>
 
 <script lang="ts" setup>
-import { renderOperation } from 'junegoo-ui'
+import { JButton, renderOperation } from 'junegoo-ui'
 import type { DataTableColumns } from 'naive-ui'
 import { h, onMounted } from 'vue'
 import Add from './Add.vue'
@@ -175,49 +164,16 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.self-check-page {
-  padding: 8px 6px 4px;
-}
-
-.query-bar {
-  display: grid;
-  grid-template-columns: minmax(360px, 1.2fr) minmax(360px, 1.3fr) auto;
-  gap: 12px;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.query-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.query-item__label {
+.search-addon {
   flex-shrink: 0;
-  color: #303133;
-  font-size: 14px;
-  font-weight: 500;
 }
 
-.query-item--title :deep(.n-input) {
-  flex: 1;
+.search-addon--date {
+  width: 360px;
 }
 
-.query-item--date :deep(.date-range-picker) {
+.self-check-search :deep(.date-range-picker) {
   width: 100%;
-}
-
-.query-actions {
-  display: flex;
-  justify-content: flex-start;
-}
-
-.toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  margin-bottom: 10px;
 }
 
 :deep(.self-check-table .n-data-table-th) {
@@ -274,8 +230,8 @@ onMounted(() => {
 }
 
 @media (max-width: 1280px) {
-  .query-bar {
-    grid-template-columns: 1fr;
+  .search-addon--date {
+    width: 100%;
   }
 }
 </style>

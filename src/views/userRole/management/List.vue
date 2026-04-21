@@ -1,24 +1,19 @@
 <template>
   <page :page-tabs="[{ label: '管理用户列表', value: '1' }]">
     <page-body>
-      <page-body-container class="management-page">
-        <div class="query-bar">
+      <page-body-header>
           <j-search
             v-model:value="userPage.query.name"
             placeholder="输入姓名查询"
             @search="userPage.onSearch"
             :reset="true"
             @reset="userPage.onReset"
-            class="management-search"
           />
-        </div>
-
-        <div class="toolbar">
-          <n-space size="small">
-            <n-button type="info" @click="userPage.openAdd">新增</n-button>
+        <n-space>
+          <j-button type="info" round @click="userPage.openAdd">新增</j-button>
           </n-space>
-        </div>
-
+      </page-body-header>
+      <page-body-container>
         <n-data-table
           class="management-table"
           :columns="columns"
@@ -51,7 +46,7 @@
 <script lang="ts" setup>
 import type { DataTableColumns } from 'naive-ui'
 import { h, onMounted } from 'vue'
-import { renderOperation } from 'junegoo-ui'
+import { JButton, renderOperation } from 'junegoo-ui'
 import Add from './Add.vue'
 import Edit from './Edit.vue'
 import View from './View.vue'
@@ -140,26 +135,6 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.management-page {
-  padding: 8px 6px 4px;
-}
-
-.query-bar {
-  display: flex;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-:deep(.management-search) {
-  width: 100%;
-}
-
-.toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  margin-bottom: 10px;
-}
 
 :deep(.management-table .n-data-table-th) {
   background: #f2f4f7;

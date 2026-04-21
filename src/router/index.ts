@@ -26,7 +26,8 @@ export const routes: Array<RouteRecordRaw> = [
         meta: {
           forceReload: true,
         },
-        component: () => import("@/views/corporateConduct/organizational/List.vue"),
+        component: () =>
+          import("@/views/corporateConduct/organizational/List.vue"),
       },
       // 规章制度
       {
@@ -34,7 +35,8 @@ export const routes: Array<RouteRecordRaw> = [
         meta: {
           forceReload: true,
         },
-        component: () => import("@/views/corporateConduct/regulations/List.vue"),
+        component: () =>
+          import("@/views/corporateConduct/regulations/List.vue"),
       },
       // 开展活动
       {
@@ -66,15 +68,32 @@ export const routes: Array<RouteRecordRaw> = [
         meta: {
           forceReload: true,
         },
-        component: () => import("@/views/conductActivity/personalCommitment/List.vue"),
+        component: () =>
+          import("@/views/conductActivity/personalCommitment/List.vue"),
       },
-      // 规章制度（兼容旧路由）
+      // 科室考评表
       {
-        path: "/corporateConduct/list",
+        path: "/departmentAssessment/table",
         meta: {
           forceReload: true,
         },
-        component: () => import("@/views/corporateConduct/regulations/List.vue"),
+        component: () => import("@/views/departmentAssessment/table/List.vue"),
+      },
+      // 科室考评范围
+      {
+        path: "/departmentAssessment/scope",
+        meta: {
+          forceReload: true,
+        },
+        component: () => import("@/views/departmentAssessment/scope/List.vue"),
+      },
+      // 科室考评项目
+      {
+        path: "/departmentAssessment/item",
+        meta: {
+          forceReload: true,
+        },
+        component: () => import("@/views/departmentAssessment/item/List.vue"),
       },
       // 管理用户列表
       {
