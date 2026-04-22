@@ -43,6 +43,7 @@ const getModuleState = (type: WorkMeetingType) => {
   if (!moduleStateMap.has(type)) {
     moduleStateMap.set(type, {
       query: reactive<WorkMeetingPageQuery>({
+        keywords: '',
         assessmentYear: null,
         assessmentPeriod: null,
         departmentName: null,
@@ -106,6 +107,7 @@ export const useWorkMeetingModule = (type: WorkMeetingType) => {
   }
 
   const onReset = async () => {
+    state.query.keywords = ''
     state.query.assessmentYear = null
     state.query.assessmentPeriod = null
     state.query.departmentName = null

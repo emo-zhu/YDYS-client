@@ -53,36 +53,6 @@ export const menuOptions: MenuOption[] = [
         iconClass: "icon-biaoqian1",
         href: "/workMeeting",
         openMode: "FRAME_INNER",
-        children: [
-          {
-            label: "月度工作会议",
-            key: "201",
-            iconClass: "icon-biaoqian1",
-            href: "/workMeeting/monthly",
-            openMode: "FRAME_INNER",
-          },
-          {
-            label: "季度工作会议",
-            key: "202",
-            iconClass: "icon-biaoqian1",
-            href: "/workMeeting/quarterly",
-            openMode: "FRAME_INNER",
-          },
-          {
-            label: "半年度工作会议",
-            key: "203",
-            iconClass: "icon-biaoqian1",
-            href: "/workMeeting/semiAnnual",
-            openMode: "FRAME_INNER",
-          },
-          {
-            label: "年度工作会议",
-            key: "204",
-            iconClass: "icon-biaoqian1",
-            href: "/workMeeting/annual",
-            openMode: "FRAME_INNER",
-          },
-        ],
       },
       {
         label: "医德医风档案",

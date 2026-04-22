@@ -43,12 +43,20 @@ export const createDefaultWorkMeetingForm = (type: WorkMeetingType): WorkMeeting
 
 const filterMeetings = (type: WorkMeetingType, query: WorkMeetingPageQuery) => {
   const list = getStore(type)
+  const keywords = (query.keywords || '').trim().toLowerCase()
 
   return list.filter((item) => {
+    const matchKeywords =
+      !keywords ||
+      item.departmentName.toLowerCase().includes(keywords) ||
+      item.reporterName.toLowerCase().includes(keywords) ||
+      item.reporterJobNo.toLowerCase().includes(keywords) ||
+      item.attachmentName.toLowerCase().includes(keywords) ||
+      item.remarks.toLowerCase().includes(keywords)
     const matchYear = !query.assessmentYear || item.assessmentYear === query.assessmentYear
     const matchPeriod = !query.assessmentPeriod || item.assessmentPeriod === query.assessmentPeriod
     const matchDepartment = !query.departmentName || item.departmentName === query.departmentName
-    return matchYear && matchPeriod && matchDepartment
+    return matchKeywords && matchYear && matchPeriod && matchDepartment
   })
 }
 

@@ -71,37 +71,13 @@ export const routes: Array<RouteRecordRaw> = [
         component: () =>
           import("@/views/conductActivity/personalCommitment/List.vue"),
       },
-      // 月度工作会议
+      // 行风工作会议
       {
-        path: "/workMeeting/monthly",
+        path: "/workMeeting",
         meta: {
           forceReload: true,
         },
-        component: () => import("@/views/workMeeting/monthly/List.vue"),
-      },
-      // 季度工作会议
-      {
-        path: "/workMeeting/quarterly",
-        meta: {
-          forceReload: true,
-        },
-        component: () => import("@/views/workMeeting/quarterly/List.vue"),
-      },
-      // 半年度工作会议
-      {
-        path: "/workMeeting/semiAnnual",
-        meta: {
-          forceReload: true,
-        },
-        component: () => import("@/views/workMeeting/semiAnnual/List.vue"),
-      },
-      // 年度工作会议
-      {
-        path: "/workMeeting/annual",
-        meta: {
-          forceReload: true,
-        },
-        component: () => import("@/views/workMeeting/annual/List.vue"),
+        component: () => import("@/views/workMeeting/List.vue"),
       },
       // 我的医德档案
       {
@@ -158,6 +134,14 @@ export const routes: Array<RouteRecordRaw> = [
           forceReload: true,
         },
         component: () => import("@/views/userRole/audit/List.vue"),
+      },
+      // 结果应用审查
+      {
+        path: "/resultReview",
+        meta: {
+          forceReload: true,
+        },
+        component: () => import("@/views/resultReview/List.vue"),
       },
     ],
   },

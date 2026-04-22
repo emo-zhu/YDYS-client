@@ -8,21 +8,33 @@
     label-width="110"
   >
     <div class="meeting-form__grid">
-      <n-form-item class="meeting-form__item" label="考核年度" path="assessmentYear">
+      <n-form-item
+        class="meeting-form__item"
+        label="考核年度"
+        path="assessmentYear"
+      >
         <n-select
           v-model:value="model.assessmentYear"
           :options="module.options.assessmentYearOptions"
           placeholder="请选择考核年度"
         />
       </n-form-item>
-      <n-form-item class="meeting-form__item" :label="module.config.periodLabel" path="assessmentPeriod">
+      <n-form-item
+        class="meeting-form__item"
+        :label="module.config.periodLabel"
+        path="assessmentPeriod"
+      >
         <n-select
           v-model:value="model.assessmentPeriod"
           :options="module.options.periodOptions"
           placeholder="请选择"
         />
       </n-form-item>
-      <n-form-item class="meeting-form__item" label="科室" path="departmentName">
+      <n-form-item
+        class="meeting-form__item"
+        label="科室"
+        path="departmentName"
+      >
         <n-select
           v-model:value="model.departmentName"
           :options="module.options.departmentOptions"
@@ -30,15 +42,37 @@
         />
       </n-form-item>
       <n-form-item class="meeting-form__item" label="状态" path="status">
-        <n-select v-model:value="model.status" :options="workMeetingStatusOptions" placeholder="请选择状态" />
+        <n-select
+          v-model:value="model.status"
+          :options="workMeetingStatusOptions"
+          placeholder="请选择状态"
+        />
       </n-form-item>
-      <n-form-item class="meeting-form__item" label="填报人" path="reporterName">
-        <n-input v-model:value="model.reporterName" placeholder="请输入填报人" />
+      <n-form-item
+        class="meeting-form__item"
+        label="填报人"
+        path="reporterName"
+      >
+        <n-input
+          v-model:value="model.reporterName"
+          placeholder="请输入填报人"
+        />
       </n-form-item>
-      <n-form-item class="meeting-form__item" label="填报人工号" path="reporterJobNo">
-        <n-input v-model:value="model.reporterJobNo" placeholder="请输入填报人工号" />
+      <n-form-item
+        class="meeting-form__item"
+        label="填报人工号"
+        path="reporterJobNo"
+      >
+        <n-input
+          v-model:value="model.reporterJobNo"
+          placeholder="请输入填报人工号"
+        />
       </n-form-item>
-      <n-form-item class="meeting-form__item" label="填报时间" path="reportTime">
+      <n-form-item
+        class="meeting-form__item"
+        label="填报时间"
+        path="reportTime"
+      >
         <n-date-picker
           type="date"
           clearable
@@ -46,10 +80,21 @@
           v-model:formatted-value="model.reportTime"
         />
       </n-form-item>
-      <n-form-item class="meeting-form__item" label="附件名称" path="attachmentName">
-        <n-input v-model:value="model.attachmentName" placeholder="请输入附件名称" />
+      <n-form-item
+        class="meeting-form__item"
+        label="附件名称"
+        path="attachmentName"
+      >
+        <n-input
+          v-model:value="model.attachmentName"
+          placeholder="请输入附件名称"
+        />
       </n-form-item>
-      <n-form-item class="meeting-form__item meeting-form__item--full" label="备注" path="remarks">
+      <n-form-item
+        class="meeting-form__item meeting-form__item--full"
+        label="备注"
+        path="remarks"
+      >
         <n-input
           v-model:value="model.remarks"
           type="textarea"
@@ -62,93 +107,97 @@
 </template>
 
 <script lang="ts" setup>
-import type { FormInst, FormRules } from 'naive-ui'
-import { ref } from 'vue'
-import { workMeetingStatusOptions } from '../config'
-import { useWorkMeetingModule } from '../hooks'
-import type { WorkMeetingForm, WorkMeetingStatus, WorkMeetingType } from '../types'
+import type { FormInst, FormRules } from "naive-ui";
+import { ref } from "vue";
+import { workMeetingStatusOptions } from "../config";
+import { useWorkMeetingModule } from "../hooks";
+import type {
+  WorkMeetingForm,
+  WorkMeetingStatus,
+  WorkMeetingType,
+} from "../types";
 
 const props = defineProps<{
-  type: WorkMeetingType
-}>()
+  type: WorkMeetingType;
+}>();
 
-const module = useWorkMeetingModule(props.type)
+const module = useWorkMeetingModule(props.type);
 
 const model = defineModel<WorkMeetingForm>({
   default: {
-    status: '待填报' as WorkMeetingStatus,
-    assessmentYear: '2025',
-    assessmentPeriod: '',
-    departmentName: '',
-    reporterName: '',
-    reporterJobNo: '',
-    reportTime: '',
-    attachmentName: '',
-    attachmentUrl: '',
-    remarks: ''
-  }
-})
+    status: "待填报" as WorkMeetingStatus,
+    assessmentYear: "2025",
+    assessmentPeriod: "",
+    departmentName: "",
+    reporterName: "",
+    reporterJobNo: "",
+    reportTime: "",
+    attachmentName: "",
+    attachmentUrl: "",
+    remarks: "",
+  },
+});
 
-const formRef = ref<FormInst | null>(null)
+const formRef = ref<FormInst | null>(null);
 
 const rules: FormRules = {
   assessmentYear: {
     required: true,
-    trigger: ['change', 'blur'],
-    message: '请选择考核年度'
+    trigger: ["change", "blur"],
+    message: "请选择考核年度",
   },
   assessmentPeriod: {
     required: true,
-    trigger: ['change', 'blur'],
-    message: '请选择考核周期'
+    trigger: ["change", "blur"],
+    message: "请选择考核周期",
   },
   departmentName: {
     required: true,
-    trigger: ['change', 'blur'],
-    message: '请选择科室'
+    trigger: ["change", "blur"],
+    message: "请选择科室",
   },
   status: {
     required: true,
-    trigger: ['change', 'blur'],
-    message: '请选择状态'
+    trigger: ["change", "blur"],
+    message: "请选择状态",
   },
   reporterName: {
     required: true,
-    trigger: ['blur', 'input'],
-    message: '请输入填报人'
+    trigger: ["blur", "input"],
+    message: "请输入填报人",
   },
   reporterJobNo: {
     required: true,
-    trigger: ['blur', 'input'],
-    message: '请输入填报人工号'
+    trigger: ["blur", "input"],
+    message: "请输入填报人工号",
   },
   reportTime: {
     required: true,
-    trigger: ['change', 'blur'],
-    message: '请选择填报时间'
+    trigger: ["change", "blur"],
+    message: "请选择填报时间",
   },
   attachmentName: {
     required: true,
-    trigger: ['blur', 'input'],
-    message: '请输入附件名称'
-  }
-}
+    trigger: ["blur", "input"],
+    message: "请输入附件名称",
+  },
+};
 
 const getData = () =>
   new Promise((resolve, reject) => {
     formRef.value?.validate((errors) => {
       if (!errors) {
-        model.value.attachmentUrl = model.value.attachmentName || ''
-        resolve(true)
-        return
+        model.value.attachmentUrl = model.value.attachmentName || "";
+        resolve(true);
+        return;
       }
 
-      window.$message?.warning('请完善表单内容')
-      reject(false)
-    })
-  })
+      window.$message?.warning("请完善表单内容");
+      reject(false);
+    });
+  });
 
-defineExpose({ getData })
+defineExpose({ getData });
 </script>
 
 <style scoped lang="scss">

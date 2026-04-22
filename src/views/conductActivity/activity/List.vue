@@ -40,7 +40,8 @@
       </page-body-header>
       <page-body-container>
         <n-data-table
-          class="activity-table"
+          v-table-full-height="110"
+          flex-height
           :columns="columns"
           :data="activityPage.pageData.value.records"
           :single-line="false"
@@ -57,7 +58,14 @@
         <j-pagination
           v-model:page-query="activityPage.query"
           :page-data="activityPage.pageData.value"
-          :page-sizes="[{ label: '每页显示10行', value: 10 }, { label: '每页显示20行', value: 20 }, { label: '每页显示100行', value: 100 }, { label: '每页显示500行', value: 500 }, { label: '每页显示1000行', value: 1000 }, { label: '每页显示2000行', value: 2000 }]"
+          :page-sizes="[
+            { label: '每页显示10行', value: 10 },
+            { label: '每页显示20行', value: 20 },
+            { label: '每页显示100行', value: 100 },
+            { label: '每页显示500行', value: 500 },
+            { label: '每页显示1000行', value: 1000 },
+            { label: '每页显示2000行', value: 2000 },
+          ]"
           @load-page="activityPage.loadPage"
           :init="false"
         />
@@ -126,7 +134,7 @@ const columns: DataTableColumns<ActivityItem> = [
   {
     title: "活动开展时间",
     key: "activityDate",
-    width: 170,
+    width: 200,
     render(row) {
       return getActivityDateText(row);
     },

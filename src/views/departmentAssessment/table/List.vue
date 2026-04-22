@@ -15,7 +15,8 @@
       </page-body-header>
       <page-body-container>
         <n-data-table
-          class="department-assessment-table"
+          v-table-full-height="110"
+          flex-height
           :columns="columns"
           :data="tablePage.pageData.value.records"
           :single-line="false"

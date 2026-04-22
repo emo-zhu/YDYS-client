@@ -23,12 +23,15 @@
           </div>
         </j-search>
         <n-space>
-          <j-button type="info" round @click="commitmentPage.openAdd">新增</j-button>
+          <j-button type="info" round @click="commitmentPage.openAdd"
+            >新增</j-button
+          >
         </n-space>
       </page-body-header>
       <page-body-container>
         <n-data-table
-          class="commitment-table"
+          v-table-full-height="110"
+          flex-height
           :columns="columns"
           :data="commitmentPage.pageData.value.records"
           :single-line="false"
@@ -44,7 +47,14 @@
         <j-pagination
           v-model:page-query="commitmentPage.query"
           :page-data="commitmentPage.pageData.value"
-          :page-sizes="[{ label: '每页显示10行', value: 10 }, { label: '每页显示20行', value: 20 }, { label: '每页显示100行', value: 100 }, { label: '每页显示500行', value: 500 }, { label: '每页显示1000行', value: 1000 }, { label: '每页显示2000行', value: 2000 }]"
+          :page-sizes="[
+            { label: '每页显示10行', value: 10 },
+            { label: '每页显示20行', value: 20 },
+            { label: '每页显示100行', value: 100 },
+            { label: '每页显示500行', value: 500 },
+            { label: '每页显示1000行', value: 1000 },
+            { label: '每页显示2000行', value: 2000 },
+          ]"
           @load-page="commitmentPage.loadPage"
           :init="false"
         />
@@ -58,112 +68,117 @@
 </template>
 
 <script lang="ts" setup>
-import { JButton, renderOperation } from 'junegoo-ui'
-import type { DataTableColumns } from 'naive-ui'
-import { h, onMounted } from 'vue'
-import Add from './Add.vue'
-import Edit from './Edit.vue'
-import View from './View.vue'
-import { useCommitmentModule } from './src/hooks/commitment'
-import type { CommitmentItem } from './src/types/commitment'
+import { JButton, renderOperation } from "junegoo-ui";
+import type { DataTableColumns } from "naive-ui";
+import { h, onMounted } from "vue";
+import Add from "./Add.vue";
+import Edit from "./Edit.vue";
+import View from "./View.vue";
+import { useCommitmentModule } from "./src/hooks/commitment";
+import type { CommitmentItem } from "./src/types/commitment";
 
-const { commitmentPage } = useCommitmentModule()
+const { commitmentPage } = useCommitmentModule();
 
 const columns: DataTableColumns<CommitmentItem> = [
   {
-    title: '状态',
-    key: 'status',
+    title: "状态",
+    key: "status",
     width: 120,
     render(row) {
       return h(
-        'span',
+        "span",
         {
-          class: ['status-tag', row.status === '进行中' ? 'status-tag--progress' : 'status-tag--finished']
+          class: [
+            "status-tag",
+            row.status === "进行中"
+              ? "status-tag--progress"
+              : "status-tag--finished",
+          ],
         },
-        row.status
-      )
-    }
+        row.status,
+      );
+    },
   },
   {
-    title: '自查自纠报告名称',
-    key: 'reportName',
+    title: "自查自纠报告名称",
+    key: "reportName",
     minWidth: 320,
     ellipsis: { tooltip: true },
     render(row) {
       return h(
-        'span',
+        "span",
         {
-          class: 'title-text title-text--link',
-          onClick: () => commitmentPage.openView(row.id)
+          class: "title-text title-text--link",
+          onClick: () => commitmentPage.openView(row.id),
         },
-        row.reportName
-      )
-    }
+        row.reportName,
+      );
+    },
   },
   {
-    title: '发起人',
-    key: 'initiator',
+    title: "发起人",
+    key: "initiator",
     width: 260,
-    ellipsis: { tooltip: true }
+    ellipsis: { tooltip: true },
   },
   {
-    title: '开始时间',
-    key: 'startTime',
-    width: 240
+    title: "开始时间",
+    key: "startTime",
+    width: 240,
   },
   {
-    title: '结束时间',
-    key: 'endTime',
-    width: 240
+    title: "结束时间",
+    key: "endTime",
+    width: 240,
   },
   {
-    title: '应填报科室',
-    key: 'targetDepartmentCount',
-    width: 180
+    title: "应填报科室",
+    key: "targetDepartmentCount",
+    width: 180,
   },
   {
-    title: '已填报科室',
-    key: 'submittedDepartmentCount',
-    width: 180
+    title: "已填报科室",
+    key: "submittedDepartmentCount",
+    width: 180,
   },
   {
-    title: '操作',
-    key: 'operate',
-    fixed: 'right',
+    title: "操作",
+    key: "operate",
+    fixed: "right",
     width: 172,
-    align: 'center',
+    align: "center",
     render(row) {
       return renderOperation([
         {
-          label: '详情',
+          label: "详情",
           event() {
-            commitmentPage.openView(row.id)
-          }
+            commitmentPage.openView(row.id);
+          },
         },
-        ...(row.status === '进行中'
+        ...(row.status === "进行中"
           ? [
               {
-                label: '结束',
+                label: "结束",
                 event() {
-                  commitmentPage.onEnd(row)
-                }
-              }
+                  commitmentPage.onEnd(row);
+                },
+              },
             ]
           : []),
         {
-          label: '删除',
+          label: "删除",
           event() {
-            commitmentPage.onDelete(row.id)
-          }
-        }
-      ])
-    }
-  }
-]
+            commitmentPage.onDelete(row.id);
+          },
+        },
+      ]);
+    },
+  },
+];
 
 onMounted(() => {
-  commitmentPage.getPage()
-})
+  commitmentPage.getPage();
+});
 </script>
 
 <style scoped lang="scss">

@@ -6,19 +6,19 @@
           <div class="toolbar__row">
             <j-search
               v-model:value="archivePage.query.keywords"
-              width="760px"
+              width="100%"
               placeholder="请输入姓名、工号、拼音简写"
               @search="archivePage.onSearch"
               :reset="true"
               @reset="archivePage.onReset"
               class="archive-search"
             >
-              <div class="search-addon search-addon--status">
-                <span class="search-addon__label">人员状态：</span>
+              <div style="width: 150px; flex-shrink: 0">
                 <n-select
                   v-model:value="archivePage.query.staffStatus"
                   :options="staffStatusOptions"
-                  class="status-select"
+                  clearable
+                  placeholder="请选择人员状态"
                 />
               </div>
             </j-search>
@@ -32,7 +32,8 @@
       </page-body-header>
       <page-body-container>
         <n-data-table
-          class="archive-table"
+          v-table-full-height="110"
+          flex-height
           :columns="columns"
           :data="archivePage.pageData.value.records"
           :single-line="false"
@@ -40,6 +41,12 @@
           striped
           :pagination="false"
           :row-key="archivePage.rowKey"
+          :scroll-x="
+            columns.reduce(
+              (acc, cur) => acc + Number(cur.width || cur.minWidth || 120),
+              0,
+            )
+          "
           :loading="archivePage.loading.value"
         />
       </page-body-container>
@@ -47,12 +54,23 @@
         <j-pagination
           v-model:page-query="archivePage.query"
           :page-data="archivePage.pageData.value"
-          :page-sizes="[{ label: '每页显示10行', value: 10 }, { label: '每页显示20行', value: 20 }, { label: '每页显示100行', value: 100 }, { label: '每页显示500行', value: 500 }, { label: '每页显示1000行', value: 1000 }, { label: '每页显示2000行', value: 2000 }]"
+          :page-sizes="[
+            { label: '每页显示10行', value: 10 },
+            { label: '每页显示20行', value: 20 },
+            { label: '每页显示100行', value: 100 },
+            { label: '每页显示500行', value: 500 },
+            { label: '每页显示1000行', value: 1000 },
+            { label: '每页显示2000行', value: 2000 },
+          ]"
           @load-page="archivePage.loadPage"
           :init="false"
         />
       </page-body-footer>
     </page-body>
+
+    <Add />
+    <Edit />
+    <View />
   </page>
 </template>
 
@@ -60,6 +78,9 @@
 import { JButton, renderOperation } from "junegoo-ui";
 import type { DataTableColumns } from "naive-ui";
 import { h, onMounted } from "vue";
+import Add from "./Add.vue";
+import Edit from "./Edit.vue";
+import View from "./View.vue";
 import { staffStatusOptions, useStaffArchiveModule } from "./src/hooks/archive";
 import type { StaffArchiveItem } from "./src/types/archive";
 
@@ -81,7 +102,14 @@ const columns: DataTableColumns<StaffArchiveItem> = [
     key: "name",
     minWidth: 180,
     render(row) {
-      return h("span", { class: "title-text title-text--link" }, row.name);
+      return h(
+        "span",
+        {
+          class: "title-text title-text--link",
+          onClick: () => archivePage.openView(row.id),
+        },
+        row.name,
+      );
     },
   },
   {
@@ -143,6 +171,7 @@ onMounted(() => {
 
 .archive-search {
   flex: 1;
+  min-width: 0;
 }
 
 .search-addon {
@@ -165,7 +194,10 @@ onMounted(() => {
 
 .toolbar__actions {
   display: flex;
+  align-items: center;
   justify-content: flex-end;
+  gap: 12px;
+  margin-left: auto;
   flex-shrink: 0;
 }
 

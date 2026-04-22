@@ -4,8 +4,12 @@
       <page-body-header>
         <div></div>
         <n-space>
-          <j-button round @click="organizationalPage.expandAll">展开全部</j-button>
-          <j-button round @click="organizationalPage.collapseAll">收起全部</j-button>
+          <j-button round @click="organizationalPage.expandAll"
+            >展开全部</j-button
+          >
+          <j-button round @click="organizationalPage.collapseAll"
+            >收起全部</j-button
+          >
         </n-space>
       </page-body-header>
       <page-body-container>
@@ -14,7 +18,6 @@
             <h3 class="org-section__title">行风建设工作领导小组</h3>
           </div>
           <n-data-table
-            class="org-table summary-table"
             :columns="leadershipColumns"
             :data="organizationalPage.leadershipRows.value"
             :show-header="false"
@@ -29,7 +32,6 @@
             <h3 class="org-section__title">行风建设领导小组办公室</h3>
           </div>
           <n-data-table
-            class="org-table summary-table"
             :columns="officeColumns"
             :data="organizationalPage.officeRows.value"
             :show-header="false"
@@ -44,7 +46,6 @@
             <h3 class="org-section__title">各科室行风建设小组</h3>
           </div>
           <n-data-table
-            class="org-table dept-table"
             :columns="departmentColumns"
             :data="organizationalPage.departmentPageData.value.records"
             :single-line="false"
@@ -52,7 +53,9 @@
             :bordered="true"
             :row-key="departmentRowKey"
             :expanded-row-keys="organizationalPage.expandedRowKeys.value"
-            @update:expanded-row-keys="organizationalPage.onExpandedRowKeysUpdate"
+            @update:expanded-row-keys="
+              organizationalPage.onExpandedRowKeysUpdate
+            "
           />
         </section>
       </page-body-container>
@@ -60,7 +63,14 @@
         <j-pagination
           v-model:page-query="organizationalPage.departmentPageQuery"
           :page-data="organizationalPage.departmentPageData.value"
-          :page-sizes="[{ label: '每页显示10行', value: 10 }, { label: '每页显示20行', value: 20 }, { label: '每页显示100行', value: 100 }, { label: '每页显示500行', value: 500 }, { label: '每页显示1000行', value: 1000 }, { label: '每页显示2000行', value: 2000 }]"
+          :page-sizes="[
+            { label: '每页显示10行', value: 10 },
+            { label: '每页显示20行', value: 20 },
+            { label: '每页显示100行', value: 100 },
+            { label: '每页显示500行', value: 500 },
+            { label: '每页显示1000行', value: 1000 },
+            { label: '每页显示2000行', value: 2000 },
+          ]"
           @load-page="organizationalPage.loadDepartmentPage"
           :init="false"
         />
@@ -73,126 +83,128 @@
 </template>
 
 <script lang="ts" setup>
-import { JButton, renderOperation } from 'junegoo-ui'
-import type { DataTableColumns } from 'naive-ui'
-import { h, onMounted } from 'vue'
-import Edit from './Edit.vue'
-import View from './View.vue'
-import { useOrganizationalModule } from './src/hooks/organizational'
-import type { BasicRow, DepartmentRow } from './src/types/organizational'
+import { JButton, renderOperation } from "junegoo-ui";
+import type { DataTableColumns } from "naive-ui";
+import { h, onMounted } from "vue";
+import Edit from "./Edit.vue";
+import View from "./View.vue";
+import { useOrganizationalModule } from "./src/hooks/organizational";
+import type { BasicRow, DepartmentRow } from "./src/types/organizational";
 
-const { organizationalPage } = useOrganizationalModule()
+const { organizationalPage } = useOrganizationalModule();
 
-const basicRowKey = (row: BasicRow) => row.id
-const departmentRowKey = (row: DepartmentRow) => row.id
+const basicRowKey = (row: BasicRow) => row.id;
+const departmentRowKey = (row: DepartmentRow) => row.id;
 
-const createSummaryColumns = (source: 'leadership' | 'office'): DataTableColumns<BasicRow> => [
+const createSummaryColumns = (
+  source: "leadership" | "office",
+): DataTableColumns<BasicRow> => [
   {
-    title: '岗位',
-    key: 'label',
-    width: 160
+    title: "岗位",
+    key: "label",
+    width: 160,
   },
   {
-    title: '内容',
-    key: 'value'
+    title: "内容",
+    key: "value",
   },
   {
-    title: '操作',
-    key: 'operate',
+    title: "操作",
+    key: "operate",
     width: 90,
-    align: 'center',
+    align: "center",
     render(row) {
       return renderOperation([
         {
-          label: '编辑',
+          label: "编辑",
           event() {
-            organizationalPage.openSummaryEdit(source, row)
-          }
-        }
-      ])
-    }
-  }
-]
+            organizationalPage.openSummaryEdit(source, row);
+          },
+        },
+      ]);
+    },
+  },
+];
 
-const leadershipColumns = createSummaryColumns('leadership')
-const officeColumns = createSummaryColumns('office')
+const leadershipColumns = createSummaryColumns("leadership");
+const officeColumns = createSummaryColumns("office");
 
 const departmentColumns: DataTableColumns<DepartmentRow> = [
   {
-    title: '考评单元名称',
-    key: 'name',
+    title: "考评单元名称",
+    key: "name",
     width: 340,
     render(row) {
       if (row.isIncludeRow) {
-        return h('span', { class: 'include-text' }, row.name)
+        return h("span", { class: "include-text" }, row.name);
       }
       return h(
-        'span',
+        "span",
         {
-          class: 'dept-name-link',
-          onClick: () => organizationalPage.openView(row.id)
+          class: "dept-name-link",
+          onClick: () => organizationalPage.openView(row.id),
         },
-        row.name
-      )
-    }
+        row.name,
+      );
+    },
   },
   {
-    title: '科室负责人',
-    key: 'leader',
+    title: "科室负责人",
+    key: "leader",
     width: 260,
     render(row) {
       if (row.isIncludeRow) {
-        return ''
+        return "";
       }
-      return organizationalPage.displayText(row.leader)
-    }
+      return organizationalPage.displayText(row.leader);
+    },
   },
   {
-    title: '党支部书记',
-    key: 'secretary',
+    title: "党支部书记",
+    key: "secretary",
     width: 260,
     render(row) {
       if (row.isIncludeRow) {
-        return ''
+        return "";
       }
-      return organizationalPage.displayText(row.secretary)
-    }
+      return organizationalPage.displayText(row.secretary);
+    },
   },
   {
-    title: '其他成员',
-    key: 'members',
+    title: "其他成员",
+    key: "members",
     width: 260,
     render(row) {
       if (row.isIncludeRow) {
-        return ''
+        return "";
       }
-      return organizationalPage.displayText(row.members)
-    }
+      return organizationalPage.displayText(row.members);
+    },
   },
   {
-    title: '操作',
-    key: 'operate',
+    title: "操作",
+    key: "operate",
     width: 100,
-    align: 'center',
+    align: "center",
     render(row) {
       if (row.isIncludeRow) {
-        return '-'
+        return "-";
       }
       return renderOperation([
         {
-          label: '编辑',
+          label: "编辑",
           event() {
-            organizationalPage.openDepartmentEdit(row)
-          }
-        }
-      ])
-    }
-  }
-]
+            organizationalPage.openDepartmentEdit(row);
+          },
+        },
+      ]);
+    },
+  },
+];
 
 onMounted(() => {
-  organizationalPage.initPage()
-})
+  organizationalPage.initPage();
+});
 </script>
 
 <style scoped lang="scss">
@@ -225,7 +237,7 @@ onMounted(() => {
 }
 
 .org-section__title::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 50%;

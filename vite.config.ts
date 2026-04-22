@@ -26,7 +26,7 @@ export default defineConfig({
     }),
   ],
   build: {
-    outDir: "dist",
+    outDir: "hrssc-ydyf-client",
   },
   base: "/medical",
   resolve: {

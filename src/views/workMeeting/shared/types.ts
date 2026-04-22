@@ -34,6 +34,7 @@ export interface WorkMeetingItem {
 export interface WorkMeetingForm extends Partial<WorkMeetingItem> {}
 
 export interface WorkMeetingPageQuery {
+  keywords: string
   assessmentYear: string | null
   assessmentPeriod: string | null
   departmentName: string | null

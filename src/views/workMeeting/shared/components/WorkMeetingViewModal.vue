@@ -16,16 +16,16 @@
 </template>
 
 <script lang="ts" setup>
-import WorkMeetingDetail from './WorkMeetingDetail.vue'
-import { useWorkMeetingModule } from '../hooks'
-import type { WorkMeetingType } from '../types'
+import WorkMeetingDetail from "./WorkMeetingDetail.vue";
+import { useWorkMeetingModule } from "../hooks";
+import type { WorkMeetingType } from "../types";
 
 const props = defineProps<{
-  type: WorkMeetingType
-}>()
+  type: WorkMeetingType;
+}>();
 
-const { type } = props
-const module = useWorkMeetingModule(props.type)
+const { type } = props;
+const module = useWorkMeetingModule(props.type);
 </script>
 
 <style scoped lang="scss">

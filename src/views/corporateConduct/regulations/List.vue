@@ -16,7 +16,8 @@
       </page-body-header>
       <page-body-container>
         <n-data-table
-          class="regulations-table"
+          v-table-full-height="110"
+          flex-height
           :columns="columns"
           :data="regulationPage.pageData.value.records"
           :single-line="false"

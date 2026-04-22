@@ -1,11 +1,22 @@
 <template>
-  <WorkMeetingListPage type="annual" />
-  <Add />
-  <Edit />
-  <View />
+  <WorkMeetingListPage type="annual" :embedded="embedded" />
+  <template v-if="!embedded">
+    <Add />
+    <Edit />
+    <View />
+  </template>
 </template>
 
 <script lang="ts" setup>
+withDefaults(
+  defineProps<{
+    embedded?: boolean
+  }>(),
+  {
+    embedded: false
+  }
+)
+
 import Add from './Add.vue'
 import Edit from './Edit.vue'
 import View from './View.vue'
