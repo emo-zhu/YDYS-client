@@ -3,7 +3,7 @@
     <page-body>
       <page-body-header>
         <div class="query-toolbar">
-          <span class="search-label">搜索条件：</span>
+          <!-- <span class="search-label">搜索条件：</span> -->
           <j-search
             v-model:value="scoreAuditPage.query.keywords"
             width="320px"

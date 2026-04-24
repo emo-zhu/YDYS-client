@@ -119,6 +119,54 @@ export const routes: Array<RouteRecordRaw> = [
         },
         component: () => import("@/views/departmentAssessment/item/List.vue"),
       },
+      // 年度考评
+      {
+        path: "/ethicsAssessment",
+        redirect: "/ethicsAssessment/rule",
+      },
+      // 年度考评规则
+      {
+        path: "/ethicsAssessment/rule",
+        meta: {
+          forceReload: true,
+        },
+        component: () => import("@/views/annualAssessment/rule/List.vue"),
+      },
+      // 医德考评项目
+      {
+        path: "/ethicsAssessment/item",
+        meta: {
+          forceReload: true,
+        },
+        component: () => import("@/views/annualAssessment/item/List.vue"),
+      },
+      // 个人医德自评
+      {
+        path: "/ethicsAssessment/personalSelfEvaluation",
+        meta: {
+          forceReload: true,
+        },
+        component: () =>
+          import("@/views/annualAssessment/personalSelfEvaluation/List.vue"),
+      },
+      // 科室医德考评
+      {
+        path: "/ethicsAssessment/departmentAssessment",
+        meta: {
+          forceReload: true,
+        },
+        component: () =>
+          import("@/views/annualAssessment/departmentAssessment/List.vue"),
+      },
+      // 医院医德评价
+      {
+        path: "/ethicsAssessment/hospitalEvaluation",
+        meta: {
+          forceReload: true,
+        },
+        component: () =>
+          import("@/views/annualAssessment/hospitalEvaluation/List.vue"),
+      },
       // 管理用户列表
       {
         path: "/userRole/management",
