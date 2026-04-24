@@ -107,7 +107,6 @@ const columns: DataTableColumns<RegulationItem> = [
     title: '发布时间',
     key: 'publishDate',
     width: 160,
-    sorter: 'default'
   },
   {
     title: '发布内容',

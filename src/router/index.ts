@@ -143,6 +143,46 @@ export const routes: Array<RouteRecordRaw> = [
         },
         component: () => import("@/views/resultReview/List.vue"),
       },
+      // 日常加减分规则
+      {
+        path: "/behaviorSupervision/rules",
+        meta: {
+          forceReload: true,
+        },
+        component: () => import("@/views/behaviorSupervision/rules/List.vue"),
+      },
+      // 个人加分申报
+      {
+        path: "/behaviorSupervision/personalApply",
+        meta: {
+          forceReload: true,
+        },
+        component: () => import("@/views/behaviorSupervision/personalApply/List.vue"),
+      },
+      // 日常加减分审核
+      {
+        path: "/behaviorSupervision/scoreAudit",
+        meta: {
+          forceReload: true,
+        },
+        component: () => import("@/views/behaviorSupervision/scoreAudit/List.vue"),
+      },
+      // 日常加减分录入
+      {
+        path: "/behaviorSupervision/scoreEntry",
+        meta: {
+          forceReload: true,
+        },
+        component: () => import("@/views/behaviorSupervision/scoreEntry/List.vue"),
+      },
+      // 日常加减分查询
+      {
+        path: "/behaviorSupervision/scoreQuery",
+        meta: {
+          forceReload: true,
+        },
+        component: () => import("@/views/behaviorSupervision/scoreQuery/List.vue"),
+      },
     ],
   },
 ];

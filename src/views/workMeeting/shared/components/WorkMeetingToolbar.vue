@@ -110,15 +110,15 @@ const module = useWorkMeetingModule(props.type);
 }
 
 .search-addon--year {
-  width: 220px;
+  width: 150px;
 }
 
 .search-addon--period {
-  width: 220px;
+  width: 150px;
 }
 
 .search-addon--department {
-  width: 240px;
+   width: 150px;
 }
 
 .search-addon__label {
