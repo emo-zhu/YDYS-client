@@ -5,11 +5,9 @@
         <n-spin :show="chartPage.loading.value">
           <div class="chart-grid">
             <ChartCard
-              v-for="card in chartPage.cards.value"
+              v-for="card in chartPage.visibleCards.value"
               :key="card.id"
               :card="card"
-              @setting="chartPage.onSetting"
-              @download="chartPage.onDownload"
             />
           </div>
         </n-spin>
@@ -33,16 +31,9 @@ onMounted(() => {
 <style scoped lang="scss">
 .chart-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-  padding: 4px;
-  background: #f5f7fa;
-}
-
-@media (max-width: 1440px) {
-  .chart-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  padding: 12px;
 }
 
 @media (max-width: 960px) {

@@ -100,17 +100,5 @@ export const getAnalysisChartCards = async (): Promise<AnalysisChartCard[]> => [
       { name: '心血管内科', color: '#722ed1', values: [0, 468, 0, 0, 0, 0, 0, 0, 0, 0] },
       { name: '神经科', color: '#8c8c8c', values: [0, 9, 0, 0, 0, 0, 0, 0, 0, 0] }
     ]
-  },
-  {
-    id: 'empty-1',
-    title: '',
-    kind: 'empty',
-    actions: []
-  },
-  {
-    id: 'empty-2',
-    title: '',
-    kind: 'empty',
-    actions: []
   }
 ]

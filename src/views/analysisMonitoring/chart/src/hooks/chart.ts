@@ -1,10 +1,20 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { getAnalysisChartCards } from '../api/chart'
 import type { AnalysisChartCard } from '../types/chart'
+
+const hasChartData = (card: AnalysisChartCard) => {
+  if (card.kind === 'bar') return Boolean(card.bars?.some((item) => item.value !== 0))
+  if (card.kind === 'donut') return Boolean(card.donut?.some((item) => item.value !== 0))
+  if (card.kind === 'line') {
+    return Boolean(card.lines?.some((line) => line.values.some((value) => value !== 0)))
+  }
+  return false
+}
 
 export const useAnalysisChartPage = () => {
   const loading = ref(false)
   const cards = ref<AnalysisChartCard[]>([])
+  const visibleCards = computed(() => cards.value.filter(hasChartData))
 
   const loadCharts = async () => {
     loading.value = true
@@ -26,6 +36,7 @@ export const useAnalysisChartPage = () => {
   return {
     loading,
     cards,
+    visibleCards,
     loadCharts,
     onSetting,
     onDownload

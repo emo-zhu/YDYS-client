@@ -1,4 +1,4 @@
-export type AnalysisChartKind = 'bar' | 'donut' | 'line' | 'empty'
+export type AnalysisChartKind = 'bar' | 'donut' | 'line'
 
 export interface ChartAction {
   type: 'setting' | 'download'
