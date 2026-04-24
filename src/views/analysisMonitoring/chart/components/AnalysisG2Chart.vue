@@ -1,5 +1,7 @@
 <template>
-  <div ref="chartRef" class="analysis-g2-chart" />
+  <n-spin :show="rendering" class="analysis-g2-chart-spin">
+    <div ref="chartRef" class="analysis-g2-chart" />
+  </n-spin>
 </template>
 
 <script lang="ts" setup>
@@ -12,6 +14,7 @@ interface ChartDatum {
   count: number
   group?: string
   label?: string
+  tooltip?: string
 }
 
 const props = withDefaults(
@@ -29,7 +32,18 @@ const props = withDefaults(
 
 const palette = ['#78a6f6', '#72cfae', '#f8bd67', '#a98af0', '#ef7bb8', '#f17777', '#8c8c8c']
 const chartRef = ref<HTMLElement | null>(null)
+const rendering = ref(false)
 let chart: G2Chart | null = null
+
+const axisStyle = {
+  title: false,
+  labelFill: '#000000',
+  labelOpacity: 1,
+  labelFontSize: 12,
+  labelFontWeight: 400,
+  line: true,
+  tick: true
+}
 
 const destroyChart = () => {
   chart?.destroy()
@@ -38,12 +52,13 @@ const destroyChart = () => {
 
 const createBaseChart = () => {
   if (!chartRef.value) return null
+  const padding = props.type === 'donut' ? ([36, 96, 36, 96] as [number, number, number, number]) : 'auto'
 
   return new G2Chart({
     container: chartRef.value,
     autoFit: true,
-    height: 350,
-    padding: 'auto'
+    height: 300,
+    padding: padding as never
   })
 }
 
@@ -52,10 +67,10 @@ const setLegend = (instance: G2Chart) => {
     instance.legend('color', {
       position: 'top',
       layout: { justifyContent: 'center' },
-      itemLabelFontSize: 16,
-      itemLabelFontWeight: 600,
-      itemMarkerSize: 14,
-      itemSpacing: 22
+      itemLabelFontSize: 14,
+      itemLabelFontWeight: 400,
+      itemMarkerSize: 11,
+      itemSpacing: 18
     })
     return
   }
@@ -76,25 +91,27 @@ const renderBarChart = (instance: G2Chart) => {
     .scale('color', { range: palette })
     .style('radiusTopLeft', 3)
     .style('radiusTopRight', 3)
-    .tooltip((data: ChartDatum) => ({ name: data.item, value: data.count }))
+    .tooltip((data: ChartDatum) => ({ name: data.tooltip || data.item, value: data.count }))
 
   if (props.showLabel) {
     interval.label({
-      text: (data: ChartDatum) => data.label || `${data.count}`,
-      position: 'inside',
-      fill: '#fff',
+      text: (data: ChartDatum) => `${data.count}`,
+      position: 'right',
+      fill: '#000000',
       fontSize: 12,
+      fontWeight: 400,
+      dx: 8,
       transform: [{ type: 'overlapDodgeY' }]
     })
   }
 
-  instance.axis('x', { title: false, labelAutoHide: true, labelFill: '#606266' })
-  instance.axis('y', { title: false, grid: true, gridLineDash: [4, 4], labelFill: '#909399' })
+  instance.axis('x', { ...axisStyle, labelAutoHide: true })
+  instance.axis('y', { ...axisStyle, grid: true, gridLineDash: [4, 4] })
   setLegend(instance)
 }
 
 const renderRingChart = (instance: G2Chart) => {
-  instance.coordinate({ type: 'theta', outerRadius: 0.78, innerRadius: 0.56 })
+  instance.coordinate({ type: 'theta', outerRadius: 0.68, innerRadius: 0.5 })
   const interval = instance
     .interval()
     .data(props.data)
@@ -110,7 +127,9 @@ const renderRingChart = (instance: G2Chart) => {
     interval.label({
       position: 'outside',
       text: (data: ChartDatum) => `${data.item}：${data.count}`,
-      fontSize: 12
+      fontSize: 12,
+      fill: '#000000',
+      connector: true
     })
   }
 
@@ -150,22 +169,27 @@ const renderLineChart = (instance: G2Chart) => {
     .tooltip(false)
 
   instance.scale('y', { domainMin: 0, nice: true })
-  instance.axis('x', { title: false, labelAutoRotate: false, labelFill: '#606266' })
-  instance.axis('y', { title: false, grid: true, gridLineDash: [4, 4], labelFill: '#909399' })
+  instance.axis('x', { ...axisStyle, labelAutoRotate: false })
+  instance.axis('y', { ...axisStyle, grid: true, gridLineDash: [4, 4] })
   setLegend(instance)
 }
 
 const renderChart = async () => {
+  rendering.value = true
   await nextTick()
-  destroyChart()
-  const instance = createBaseChart()
-  if (!instance) return
+  try {
+    destroyChart()
+    const instance = createBaseChart()
+    if (!instance) return
 
-  chart = instance
-  if (props.type === 'bar') renderBarChart(instance)
-  if (props.type === 'donut') renderRingChart(instance)
-  if (props.type === 'line') renderLineChart(instance)
-  instance.render()
+    chart = instance
+    if (props.type === 'bar') renderBarChart(instance)
+    if (props.type === 'donut') renderRingChart(instance)
+    if (props.type === 'line') renderLineChart(instance)
+    await Promise.resolve(instance.render())
+  } finally {
+    rendering.value = false
+  }
 }
 
 const downloadImage = async (fileName: string) => {
@@ -189,8 +213,16 @@ defineExpose({ downloadImage })
 </script>
 
 <style scoped lang="scss">
+.analysis-g2-chart-spin {
+  width: 100%;
+}
+
 .analysis-g2-chart {
   width: 100%;
-  height: 350px;
+  height: 300px;
+}
+
+.analysis-g2-chart-spin :deep(.n-spin-content) {
+  width: 100%;
 }
 </style>
