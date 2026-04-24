@@ -1,7 +1,9 @@
 <template>
   <page :page-tabs="[{ label: '行风工作会议', value: '1' }]">
     <page-body>
-      <page-body-header v-model:value="tabValue" @tabs-click="onTabChange" />
+      <page-body-header v-model:value="tabValue" @tabs-click="onTabChange">
+        <WorkMeetingToolbar :key="tabValue" :type="tabValue" />
+      </page-body-header>
       <page-body-container>
         <tab-panel-item label="月度工作会议" value="monthly">
           <MonthlyList embedded />
@@ -58,6 +60,7 @@ import SemiAnnualEdit from "./semiAnnual/Edit.vue";
 import SemiAnnualList from "./semiAnnual/List.vue";
 import SemiAnnualView from "./semiAnnual/View.vue";
 import WorkMeetingPagination from "./shared/components/WorkMeetingPagination.vue";
+import WorkMeetingToolbar from "./shared/components/WorkMeetingToolbar.vue";
 import type { WorkMeetingType } from "./shared/types";
 
 const tabValue = ref<WorkMeetingType>("monthly");
@@ -66,9 +69,3 @@ const onTabChange = (value: string) => {
   tabValue.value = value as WorkMeetingType;
 };
 </script>
-
-<style scoped lang="scss">
-:deep(.j-page-body-header) {
-  padding-bottom: 0;
-}
-</style>

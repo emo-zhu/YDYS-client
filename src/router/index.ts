@@ -143,6 +143,27 @@ export const routes: Array<RouteRecordRaw> = [
         },
         component: () => import("@/views/resultReview/List.vue"),
       },
+      // 行风分析监控
+      {
+        path: "/analysisMonitoring",
+        redirect: "/analysisMonitoring/chart",
+      },
+      // 分析图
+      {
+        path: "/analysisMonitoring/chart",
+        meta: {
+          forceReload: true,
+        },
+        component: () => import("@/views/analysisMonitoring/chart/List.vue"),
+      },
+      // 分析表
+      {
+        path: "/analysisMonitoring/table",
+        meta: {
+          forceReload: true,
+        },
+        component: () => import("@/views/analysisMonitoring/table/List.vue"),
+      },
       // 日常加减分规则
       {
         path: "/behaviorSupervision/rules",

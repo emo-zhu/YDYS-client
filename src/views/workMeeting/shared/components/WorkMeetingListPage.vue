@@ -13,9 +13,6 @@
     </page-body>
   </page>
   <div v-else class="meeting-embedded">
-    <div class="meeting-embedded__header meeting-header">
-      <WorkMeetingToolbar :type="type" />
-    </div>
     <div class="meeting-embedded__container">
       <WorkMeetingTable :type="type" />
     </div>
@@ -54,6 +51,5 @@ onMounted(() => {
 
 .meeting-embedded__container {
   min-width: 0;
-  padding-top: 16px;
 }
 </style>
